@@ -1,0 +1,276 @@
+{
+  "parametersContainer": {
+    "development": {
+      "password": "dbUser1234",
+      "username": "dbUser",
+      "connectionString": "mongodb+srv://cluster00.azftj4t.mongodb.net/?appName=Cluster00",
+      "dbName": "sample_mflix"
+    }
+  },
+  "_id": "84930b93-7cd5-40e3-bcc4-6436e39bd406",
+  "name": "mongoconnector",
+  "type": "Mongo:mongo",
+  "disabled": false,
+  "cpuShares": 1024,
+  "replicaCount": 1,
+  "collections": [
+    {
+      "fields": [
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "title",
+          "name": "title",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "int",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "year",
+          "name": "year",
+          "type": "INT32"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "plot",
+          "name": "plot",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": true,
+          "dictionary": false,
+          "nativeIdentifier": "genres",
+          "name": "genres",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": true,
+          "dictionary": false,
+          "nativeIdentifier": "cast",
+          "name": "cast",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": true,
+          "dictionary": false,
+          "nativeIdentifier": "directors",
+          "name": "directors",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": true,
+          "dictionary": false,
+          "nativeIdentifier": "countries",
+          "name": "countries",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "movies/imdb",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "imdb",
+          "name": "imdb",
+          "type": "movies/imdb"
+        },
+        {
+          "nativeTypeIdentifier": "movies/tomatoes",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "tomatoes",
+          "name": "tomatoes",
+          "type": "movies/tomatoes"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "_id",
+          "name": "_id",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "_content",
+          "name": "_content",
+          "type": "STRING"
+        }
+      ],
+      "types": [
+      ],
+      "constraints": [
+      ],
+      "details": {
+        "valid": true,
+        "validationSchema": "{\"bsonType\": \"object\", \"required\": [\"title\", \"year\"], \"properties\": {\"title\": {\"bsonType\": \"string\", \"description\": \"must be a string and is required\"}, \"year\": {\"bsonType\": \"int\", \"description\": \"must be an int and is required\"}, \"plot\": {\"bsonType\": \"string\", \"description\": \"must be a string\"}, \"genres\": {\"bsonType\": \"array\", \"description\": \"must be an array\", \"items\": {\"bsonType\": \"string\"}}, \"cast\": {\"bsonType\": \"array\", \"description\": \"must be an array\", \"items\": {\"bsonType\": \"string\"}}, \"directors\": {\"bsonType\": \"array\", \"description\": \"must be an array\", \"items\": {\"bsonType\": \"string\"}}, \"countries\": {\"bsonType\": \"array\", \"description\": \"must be an array\", \"items\": {\"bsonType\": \"string\"}}, \"imdb\": {\"bsonType\": \"object\", \"description\": \"must be an object\", \"properties\": {\"rating\": {\"bsonType\": [\"double\", \"int\"], \"description\": \"must be a number\"}, \"votes\": {\"bsonType\": \"int\", \"description\": \"must be an int\"}, \"id\": {\"bsonType\": \"int\", \"description\": \"must be an int\"}}}, \"tomatoes\": {\"bsonType\": \"object\", \"description\": \"must be an object\", \"properties\": {\"viewer\": {\"bsonType\": \"object\", \"description\": \"must be an object\", \"properties\": {\"rating\": {\"bsonType\": [\"double\", \"int\"], \"description\": \"must be a number\"}, \"numReviews\": {\"bsonType\": \"int\", \"description\": \"must be an int\"}}}, \"critic\": {\"bsonType\": \"object\", \"description\": \"must be an object\", \"properties\": {\"rating\": {\"bsonType\": [\"double\", \"int\"], \"description\": \"must be a number\"}, \"numReviews\": {\"bsonType\": \"int\", \"description\": \"must be an int\"}}}}}}}",
+        "additionalProperties": true
+      },
+      "nativeIdentifier": "movies",
+      "name": "movies",
+      "type": "movies"
+    },
+    {
+      "fields": [
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "name",
+          "name": "name",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "email",
+          "name": "email",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "password",
+          "name": "password",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "_id",
+          "name": "_id",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "_content",
+          "name": "_content",
+          "type": "STRING"
+        }
+      ],
+      "types": [
+      ],
+      "constraints": [
+      ],
+      "details": {
+        "valid": true,
+        "validationSchema": "{\"bsonType\": \"object\", \"required\": [\"name\", \"email\", \"password\"], \"properties\": {\"_id\": {}, \"name\": {\"bsonType\": \"string\", \"minLength\": 1}, \"email\": {\"bsonType\": \"string\", \"pattern\": \"^[^@\\\\s]+@[^@\\\\s]+\\\\.[^@\\\\s]+$\"}, \"password\": {\"bsonType\": \"string\", \"pattern\": \"^\\\\$2[aby]\\\\$\\\\d{2}\\\\$[./A-Za-z0-9]{53}$\"}}, \"additionalProperties\": true}",
+        "additionalProperties": true
+      },
+      "nativeIdentifier": "users",
+      "name": "users",
+      "type": "users"
+    },
+    {
+      "fields": [
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "_id",
+          "name": "_id",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "content",
+          "name": "content",
+          "type": "STRING"
+        }
+      ],
+      "types": [
+      ],
+      "constraints": [
+      ],
+      "details": {
+      },
+      "nativeIdentifier": "sessions",
+      "name": "sessions",
+      "type": "sessions"
+    },
+    {
+      "fields": [
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "_id",
+          "name": "_id",
+          "type": "STRING"
+        },
+        {
+          "nativeTypeIdentifier": "string",
+          "extra": {
+          },
+          "array": false,
+          "dictionary": false,
+          "nativeIdentifier": "content",
+          "name": "content",
+          "type": "STRING"
+        }
+      ],
+      "types": [
+      ],
+      "constraints": [
+      ],
+      "details": {
+      },
+      "nativeIdentifier": "theaters",
+      "name": "theaters",
+      "type": "theaters"
+    }
+  ]
+}

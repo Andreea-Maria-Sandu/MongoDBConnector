@@ -1,0 +1,177 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+    id 'java-library-distribution'
+}
+def majorVersion = '2026.1'
+
+description = 'Data Transit System MongoDB Blade Library'
+version = "${majorVersion}.${artifactBuildNumber}"
+group = 'com.alloy.dts'
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': description,
+                'Implementation-Version': archiveVersion
+    }
+}
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url "${azure_url}"
+        credentials {
+            username = "${azure_user}"
+            password = "${vstsMavenAccessToken}"
+        }
+    }
+}
+
+task incrementbuildnumber{
+
+    Properties props = new Properties()
+    File propsFile = new File("$project.rootDir"+File.separator+'gradle.properties')
+    props.load(propsFile.newDataInputStream())
+    Integer nextbuildnum = ( ((props.getProperty('artifactBuildNumber')) as Integer) + 1 )
+    props.setProperty('artifactBuildNumber', nextbuildnum.toString())
+    props.store(propsFile.newWriter(), null)
+    props.load(propsFile.newDataInputStream())
+
+    mustRunAfter jar
+}
+
+//
+List dtsTestHelper = ['com.alloy.dts:dts-test-helper:' + majorVersion + '.+']
+List dtsCore = ['com.alloy.dts:dts-core:' + majorVersion + '.+']
+List dtsProducer = ['com.alloy.dts:dts-producer:' + majorVersion + '.+']
+
+
+dependencies {
+    // Use JUnit test framework
+   implementation dtsCore
+   testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1', 'org.junit.jupiter:junit-jupiter-engine:5.10.1', dtsTestHelper, dtsProducer
+}
+
+test {
+    useJUnitPlatform()
+}
+
+String allBladeJarsFolderName = "preRelease"
+String buildDirectory = rootProject.layout.buildDirectory.get().getAsFile().getAbsolutePath()
+
+
+task preRelease(type: Copy) {
+    from zipTree("${buildDirectory}/distributions/${rootProject.name}-${version}.zip")
+    into "$buildDirectory/${allBladeJarsFolderName}"
+}
+
+task releaseBlade(type: Copy) {
+    from "${buildDirectory}/${allBladeJarsFolderName}/${rootProject.name}-${version}/${rootProject.name}-${version}.jar"
+    rename { String filename ->
+        return filename.replace("-${version}.jar","-${majorVersion}.jar")
+    }
+    into "${buildDirectory}/release"
+
+    doLast{
+        generateConnectorDefinition(majorVersion)
+    }
+}
+
+task utenvDeployBlade(type: Copy) {
+   from "${buildDirectory}/${allBladeJarsFolderName}/${rootProject.name}-${version}/${rootProject.name}-${version}.jar"
+   into "${buildDirectory}/release"
+
+   doLast{
+       generateConnectorDefinition(version)
+   }
+}
+
+task releaseBladeLibs(type: Copy) {
+   println "Copy blade lib jars from folder ${buildDirectory}/${allBladeJarsFolderName}/${rootProject.name}-${version}/lib"
+   from "${buildDirectory}/${allBladeJarsFolderName}/${rootProject.name}-${version}/lib"
+   include "mariadb-java-client-*.jar", "caffeine-*.jar", "jcl-over-slf4j-*.jar", "jna-*.jar", "waffle-jna-*.jar"
+   into "${buildDirectory}/release"
+}
+
+void generateConnectorDefinition(String dVersion) {
+    String bladeCategory = "MariaDB"
+    String buildDirectory = rootProject.layout.buildDirectory.get().getAsFile().getAbsolutePath()
+    println "Releasing ${rootProject.name} version ${dVersion}"
+    println "Release folder is ${buildDirectory}/release"
+    println "# ${bladeCategory} blade connector definition"
+    String defContent = "{\n"
+    defContent = defContent + "\t\"category\": \"${bladeCategory}\",\n"
+    defContent = defContent + "\t\"bladeJar\": \"${bladeCategory}/${rootProject.name}-${dVersion}.jar\",\n"
+    defContent = defContent + "\t\"requiredJars\": [\n"
+    defContent = defContent + "\t\t\"${bladeCategory}/${rootProject.name}-${dVersion}.jar\""
+    defContent = defContent + "\t],\n"
+    defContent = defContent + "\t\"build\": ${artifactBuildNumber} \n}"
+
+    println defContent
+
+    def file = file("${buildDirectory}/release/connector-def.txt")
+    file.text = defContent
+}
+
+task releaseArchive(type: Zip) {
+    archiveFileName = "${rootProject.name}-${majorVersion}.zip"
+    destinationDirectory = file("$buildDirectory/${allBladeJarsFolderName}")
+
+    from "$buildDirectory/release"
+}
+
+task utenvArchive(type: Zip) {
+    archiveFileName = "${rootProject.name}-${artifactBuildNumber}.zip"
+    destinationDirectory = file("$buildDirectory/${allBladeJarsFolderName}")
+
+    from "$buildDirectory/release"
+}
+
+task release(type: Copy) {
+    from "${buildDirectory}/${allBladeJarsFolderName}"
+    include "${rootProject.name}-${majorVersion}.zip"
+    into "${buildDirectory}/release"
+}
+
+task utenvDeploy(type: Copy) {
+    from "${buildDirectory}/${allBladeJarsFolderName}"
+    include "${rootProject.name}-${version}.zip"
+    into "${buildDirectory}/release"
+}
+
+
+preRelease.dependsOn clean, distZip
+releaseBladeLibs.dependsOn preRelease
+releaseBlade.dependsOn preRelease, releaseBladeLibs
+releaseArchive.dependsOn releaseBlade
+release.dependsOn releaseArchive
+
+utenvDeployBlade.dependsOn preRelease, releaseBladeLibs
+utenvArchive.dependsOn utenvDeployBlade
+utenvDeploy.dependsOn utenvArchive
+
+
+publishing {
+    repositories {
+        maven {
+            // change to point to your repo, e.g. http://my.org/repo
+        //    url = "$buildDir/repo"
+            url "${azure_url}"
+            credentials {
+                username = "${azure_user}"
+                password = "${vstsMavenAccessToken}"
+            }
+        }
+    }
+
+    publications {
+        maven(MavenPublication) {
+            groupId = group
+            artifactId = rootProject.name
+
+            from components.java
+        }
+    }
+}
