@@ -1,107 +1,107 @@
 {
-  $jsonSchema: {
-    bsonType: 'object',
-    required: [
-      'title',
-      'year'
+  "$jsonSchema": {
+    "bsonType": "object",
+    "required": [
+      "title",
+      "year"
     ],
-    properties: {
-      title: {
-        bsonType: 'string',
-        description: 'must be a string and is required'
+    "properties": {
+      "title": {
+        "bsonType": "string",
+        "description": "must be a string and is required"
       },
-      year: {
-        bsonType: 'int',
-        description: 'must be an int and is required'
+      "year": {
+        "bsonType": "int",
+        "description": "must be an int and is required"
       },
-      plot: {
-        bsonType: 'string',
-        description: 'must be a string'
+      "plot": {
+        "bsonType": "string",
+        "description": "must be a string"
       },
-      genres: {
-        bsonType: 'array',
-        description: 'must be an array',
-        items: {
-          bsonType: 'string'
+      "genres": {
+        "bsonType": "array",
+        "description": "must be an array",
+        "items": {
+          "bsonType": "string"
         }
       },
-      cast: {
-        bsonType: 'array',
-        description: 'must be an array',
-        items: {
-          bsonType: 'string'
+      "cast": {
+        "bsonType": "array",
+        "description": "must be an array",
+        "items": {
+          "bsonType": "string"
         }
       },
-      directors: {
-        bsonType: 'array',
-        description: 'must be an array',
-        items: {
-          bsonType: 'string'
+      "directors": {
+        "bsonType": "array",
+        "description": "must be an array",
+        "items": {
+          "bsonType": "string"
         }
       },
-      countries: {
-        bsonType: 'array',
-        description: 'must be an array',
-        items: {
-          bsonType: 'string'
+      "countries": {
+        "bsonType": "array",
+        "description": "must be an array",
+        "items": {
+          "bsonType": "string"
         }
       },
-      imdb: {
-        bsonType: 'object',
-        description: 'must be an object',
-        properties: {
-          rating: {
-            bsonType: [
-              'double',
-              'int'
+      "imdb": {
+        "bsonType": "object",
+        "description": "must be an object",
+        "properties": {
+          "rating": {
+            "bsonType": [
+              "double",
+              "int"
             ],
-            description: 'must be a number'
+            "description": "must be a number"
           },
-          votes: {
-            bsonType: 'int',
-            description: 'must be an int'
+          "votes": {
+            "bsonType": "int",
+            "description": "must be an int"
           },
-          id: {
-            bsonType: 'int',
-            description: 'must be an int'
+          "id": {
+            "bsonType": "int",
+            "description": "must be an int"
           }
         }
       },
-      tomatoes: {
-        bsonType: 'object',
-        description: 'must be an object',
-        properties: {
-          viewer: {
-            bsonType: 'object',
-            description: 'must be an object',
-            properties: {
-              rating: {
-                bsonType: [
-                  'double',
-                  'int'
+      "tomatoes": {
+        "bsonType": "object",
+        "description": "must be an object",
+        "properties": {
+          "viewer": {
+            "bsonType": "object",
+            "description": "must be an object",
+            "properties": {
+              "rating": {
+                "bsonType": [
+                  "double",
+                  "int"
                 ],
-                description: 'must be a number'
+                "description": "must be a number"
               },
-              numReviews: {
-                bsonType: 'int',
-                description: 'must be an int'
+              "numReviews": {
+                "bsonType": "int",
+                "description": "must be an int"
               }
             }
           },
-          critic: {
-            bsonType: 'object',
-            description: 'must be an object',
-            properties: {
-              rating: {
-                bsonType: [
-                  'double',
-                  'int'
+          "critic": {
+            "bsonType": "object",
+            "description": "must be an object",
+            "properties": {
+              "rating": {
+                "bsonType": [
+                  "double",
+                  "int"
                 ],
-                description: 'must be a number'
+                "description": "must be a number"
               },
-              numReviews: {
-                bsonType: 'int',
-                description: 'must be an int'
+              "numReviews": {
+                "bsonType": "int",
+                "description": "must be an int"
               }
             }
           }
